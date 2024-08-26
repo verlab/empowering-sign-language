@@ -6,6 +6,8 @@ Here we enable the reviewer to:
 
 ## Installation
 
+Please download the Image2Image translation model and put it under `examples/ckpt/` folder: [Link](https://drive.google.com/file/d/1i2LJXKp-yWKIEEgJ7C6cE3_2NirfY_0a/view?usp=sharing)
+
 ### Requirements
 
 - Ubuntu 22.04 LTS
