@@ -1,0 +1,35 @@
+# Use the official Ubuntu 20.04 image as a base
+FROM ubuntu:20.04
+
+# Set environment variables to ensure non-interactive installation
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Update package list and install necessary packages
+RUN apt-get update && apt-get install -y \
+    python3 \
+    python3-pip \
+    python3-venv \
+    build-essential \
+    libffi-dev \
+    libssl-dev \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+RUN apt-get update && apt-get install ffmpeg libsm6 libxext6  -y
+# Upgrade pip
+RUN python3 -m pip install --upgrade pip
+
+# Install the specified Python packages
+COPY requirements.txt /app/requirements.txt
+RUN pip install -r /app/requirements.txt
+
+# Copy the test.py file into the container
+
+COPY run_fvd_bkp.py /app/run_fvd_bkp.py
+COPY frechet_video_distance.py /app/frechet_video_distance.py
+COPY videos_volume /app/videos_volume
+COPY test_rendered /app/test_rendered
+# Set the working directory
+WORKDIR /app
+
+# Run the test.py script
+CMD ["sh", "-c", "python3 run_fvd_bkp.py"]
